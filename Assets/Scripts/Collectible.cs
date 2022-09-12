@@ -14,6 +14,7 @@ public class Collectible : MonoBehaviour
             color = randomCollectible.color;
         }
     }
+    /*
     CollectibleColor getColor()
     {
         return this.color;
@@ -23,7 +24,7 @@ public class Collectible : MonoBehaviour
     {
         this.color = color;
     }
-
+    */
    
 
 }

@@ -5,9 +5,16 @@ public enum CollectibleColor
     Blue,
 }
 
-public enum Hello
+public enum Action
 {
-    Pink,
-    Emerald,
-    Sapphire,
+    Idle,
+    Run,
+    Walk,
+}
+
+public enum ItemColor
+{
+    Red,
+    Green,
+    Blue,
 }
