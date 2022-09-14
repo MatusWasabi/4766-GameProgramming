@@ -5,6 +5,7 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     public CollectibleColor color;
+    [SerializeField] private SoCollectible soCollectible;
 
 
     private void Start()
@@ -13,7 +14,14 @@ public class Collectible : MonoBehaviour
         {
             color = randomCollectible.color;
         }
+
+        if (soCollectible != null) {Debug.Log($"SoCollectible name is {soCollectible.GetName()}"); }
+        
     }
+
+
+
+
     /*
     CollectibleColor getColor()
     {

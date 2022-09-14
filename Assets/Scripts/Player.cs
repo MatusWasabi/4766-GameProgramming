@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     {
         if (value.isPressed)
         {
-            Debug.Log($"{value} is pressed");
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         }
     }
