@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850ed55bdf5cf2742a02f587bdffaf42, type: 3}
   m_Name: Hello Word
   m_EditorClassIdentifier: 
-  collectibleName: 
+  collectibleName: 'Hello '
   collectibleColor: 0

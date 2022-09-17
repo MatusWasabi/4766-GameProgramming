@@ -6,7 +6,11 @@ using UnityEngine;
 public class SoCollectible : ScriptableObject
 {
     [SerializeField] private string collectibleName;
-    [SerializeField] private CollectibleColor collectibleColor;
+    [SerializeField] private PowerUp powerUp;
+    [SerializeField] private Sprite sprite;
+    [SerializeField] private Sprite outlineSprite;
+    [SerializeField] private bool isRespawnable;
+
 
     public string GetName()
     {

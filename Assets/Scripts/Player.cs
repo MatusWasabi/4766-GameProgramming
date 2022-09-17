@@ -50,6 +50,11 @@ public class Player : MonoBehaviour
             }
             Destroy(collectible.gameObject);
         }
+
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            GameManager.instance.LoadNextLevel();
+        }
     }
 
 }
