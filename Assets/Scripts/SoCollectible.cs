@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Collectible", menuName = "Scriptables Objects/Collectible")]
 public class SoCollectible : ScriptableObject
 {
-    [SerializeField] private string collectibleName;
+    [SerializeField] public string collectibleName { get; private set; }
     [SerializeField] private PowerUp powerUp;
     [SerializeField] private Sprite sprite;
     [SerializeField] private Sprite outlineSprite;
@@ -15,5 +15,10 @@ public class SoCollectible : ScriptableObject
     public string GetName()
     {
         return collectibleName;
+    }
+
+    public PowerUp GetPowerUp()
+    {
+        return powerUp;
     }
 }
