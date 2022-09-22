@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 850ed55bdf5cf2742a02f587bdffaf42, type: 3}
-  m_Name: DoubleJump
+  m_Name: RefillEnergy
   m_EditorClassIdentifier: 
-  sprite: {fileID: -960866895, guid: e4cf1e6cc738caf408ebd98517ada700, type: 3}
-  outlineSprite: {fileID: -590276683, guid: e4cf1e6cc738caf408ebd98517ada700, type: 3}
+  sprite: {fileID: -256801973581565161, guid: 16f0bf9ed482aa240bf1e343591119a5, type: 3}
+  outlineSprite: {fileID: 0}
   isRespawnable: 0
-  powerUp: 3
+  powerUp: 1

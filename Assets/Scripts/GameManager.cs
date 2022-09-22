@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
 
-
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -28,9 +27,10 @@ public class GameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
         if(nextSceneBuildIndex == SceneManager.sceneCountInBuildSettings)
         {
-            LoadLevel(0);
+            SceneManager.LoadScene(0);
         }
         else
         {

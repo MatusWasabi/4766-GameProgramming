@@ -4,20 +4,20 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField] public Rigidbody2D rb2D;
+    [SerializeField] private BoxCollider2D boxCollider2D;
+
     [SerializeField] private float moveInput;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float walkSpeed = 5;
+    [SerializeField] private float coyoteTime = 0.2f;
+    [SerializeField] private float coyoteTimeCounter;
+
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private CollectibleColor playerColor;
-    [SerializeField] private BoxCollider2D boxCollider2D;
+
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool doubleJumpUsed;
     [SerializeField] private PowerUp powerUp;
-
-
-
-    [SerializeField] private float coyoteTime = 0.2f;
-    [SerializeField] private float coyoteTimeCounter;
 
     [SerializeField] private Animator animator;
     private static readonly int xVelocity = Animator.StringToHash("xVelocity");
@@ -104,14 +104,8 @@ public class Player : MonoBehaviour
                     break;
 
             }
-            
-
-            collision.gameObject.SetActive(false);
-            
-
+             //collectible.gameObject.SetActive(false);
         }
-
-
 
         if (collision.gameObject.CompareTag("Finish"))
         {
@@ -143,7 +137,9 @@ public class Player : MonoBehaviour
     {
         float extendedHeight = 0.1f;
         Bounds boxColliderBound = boxCollider2D.bounds;
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxColliderBound.center, boxColliderBound.size, 0f,Vector2.down ,extendedHeight, groundLayer);
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxColliderBound.center, 
+            boxColliderBound.size, 0f,Vector2.down ,extendedHeight, groundLayer);
+        
         Color rayColor;
         if (raycastHit2D.collider != null)
         {

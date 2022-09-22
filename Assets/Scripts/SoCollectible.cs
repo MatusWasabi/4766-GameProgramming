@@ -6,11 +6,10 @@ using UnityEngine;
 public class SoCollectible : ScriptableObject
 {
     [SerializeField] public string collectibleName { get; private set; }
-    [SerializeField] private PowerUp powerUp;
     [SerializeField] private Sprite sprite;
     [SerializeField] private Sprite outlineSprite;
     [SerializeField] private bool isRespawnable;
-
+    [SerializeField] private PowerUp powerUp;
 
     public string GetName()
     {
@@ -20,5 +19,15 @@ public class SoCollectible : ScriptableObject
     public PowerUp GetPowerUp()
     {
         return powerUp;
+    }
+
+    public Sprite GetSprite()
+    {
+        return sprite;
+    }
+
+    public Sprite GetOutlineSprite()
+    {
+        return outlineSprite;
     }
 }

@@ -8,6 +8,7 @@ public class Collectible : MonoBehaviour
     [SerializeField] private SoCollectible soCollectible;
     [SerializeField] private Respawning respawning;
     public PowerUp powerUp;
+    private SpriteRenderer collectibleSprite;
 
 
 
@@ -16,37 +17,34 @@ public class Collectible : MonoBehaviour
     {
         powerUp = soCollectible.GetPowerUp();
 
+        collectibleSprite = GetComponent<SpriteRenderer>();
+        collectibleSprite.sprite = soCollectible.GetSprite();
+
         if (TryGetComponent(out RandomCollectible randomCollectible))
         {
             color = randomCollectible.color;
         }
 
-        if (soCollectible != null) 
+        if (soCollectible != null)
         {
-            Debug.Log($"SoCollectible name is {soCollectible.GetName()}"); 
+            Debug.Log($"SoCollectible name is {soCollectible.GetName()}");
 
         }
-        
+
 
     }
 
-
-    private void OnDisable()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        respawning.RespawnItem();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log($"This Collectible is {soCollectible}");
+            gameObject.SetActive(false);
+            respawning.RespawnItem();
+        }
     }
 
-    /*
-    CollectibleColor getColor()
-    {
-        return this.color;
-    }
 
-    void setColor(CollectibleColor color) 
-    {
-        this.color = color;
-    }
-    */
 
 
 }

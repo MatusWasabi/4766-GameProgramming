@@ -15,10 +15,7 @@ public class Respawning : MonoBehaviour
 
     private IEnumerator Respawn()
     {
-
             yield return new WaitForSeconds(waitingSeconds);
             respawningItem.SetActive(true);
-
-
     }
 }
