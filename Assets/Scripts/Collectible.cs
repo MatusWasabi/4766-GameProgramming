@@ -32,10 +32,12 @@ public class Collectible : MonoBehaviour
 
         }
 
-        if(endPoint != null)
+        if (endPoint != null)
         {
             transform.DOMove(endPoint.transform.position, 1f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
         }
+            
+        
         
 
 

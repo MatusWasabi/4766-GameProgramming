@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     {
         moveInput = value.Get<float>();
         FlipPlayerSpirte();
+        Debug.Log($"{value} is pressed");
 
     }
 
@@ -69,6 +70,8 @@ public class Player : MonoBehaviour
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             doubleJumpUsed = true;
         }
+
+        Debug.Log($"{value} is pressed");
 
     }
 
