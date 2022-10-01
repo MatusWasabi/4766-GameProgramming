@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Collectible : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Collectible : MonoBehaviour
     [SerializeField] private Respawning respawning;
     public PowerUp powerUp;
     private SpriteRenderer collectibleSprite;
-
+    [SerializeField] private GameObject endPoint;
 
 
 
@@ -31,6 +32,12 @@ public class Collectible : MonoBehaviour
 
         }
 
+        if(endPoint != null)
+        {
+            transform.DOMove(endPoint.transform.position, 1f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+        }
+        
+
 
     }
 
@@ -42,6 +49,12 @@ public class Collectible : MonoBehaviour
             gameObject.SetActive(false);
             respawning.RespawnItem();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        
+        //(Ease.InOutBack).SetLoops(-1, LoopType.Yoyo);
     }
 
 

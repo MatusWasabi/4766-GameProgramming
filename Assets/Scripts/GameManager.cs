@@ -2,26 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
+    [SerializeField] private int playerHealth = 3;
+    [SerializeField] private HealthCheck healthCheck;
+
+    /*public int PlayerHealth
+    {
+        get => playerHealth;
+        set { playerHealth = value; }
+    }*/
 
     private void Awake()
     {
         if (instance != null && instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
+            healthCheck.UpdateHealth(playerHealth);
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+
+        
     }
 
     public void LoadLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
+        DOTween.KillAll();
     }
 
     public void LoadNextLevel()
@@ -30,18 +44,38 @@ public class GameManager : MonoBehaviour
 
         if(nextSceneBuildIndex == SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(0);
+            LoadLevel(0);
         }
         else
         {
-            SceneManager.LoadScene(nextSceneBuildIndex);
+            LoadLevel(nextSceneBuildIndex);
         }
         
     }
 
-    public void ProcessPlayerDeath()
+    public void PlayerDeath()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        playerHealth--;
+        healthCheck.UpdateHealth(playerHealth);
+        if (playerHealth <= 0) { LoadLevel(0); Destroy(gameObject); }
+        else
+        {
+            LoadLevel(SceneManager.GetActiveScene().buildIndex);
+        }
     }
+
+
+    private void OnDestroy()
+    {
+        Debug.Log("This has been destoryed");
+    }
+
+    public void LoadMainMenu()
+    {
+        LoadLevel(0);
+        Destroy(gameObject);
+    }
+
+
 
 }

@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
     private void OnMove(InputValue value) 
     {
         moveInput = value.Get<float>();
-        Debug.Log($"Float of moveInput is {moveInput}");
         FlipPlayerSpirte();
 
     }
@@ -71,6 +70,15 @@ public class Player : MonoBehaviour
             doubleJumpUsed = true;
         }
 
+    }
+
+    private void OnQuit(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            GameManager.instance.LoadMainMenu();
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -100,21 +108,20 @@ public class Player : MonoBehaviour
                     break;
 
                 default:
-                    Debug.Log($"There is no power up");
+
                     break;
 
             }
              //collectible.gameObject.SetActive(false);
         }
 
-        if (collision.gameObject.CompareTag("Finish"))
+        if (collision.gameObject.TryGetComponent(out FinishLine finishLine))
         {
-            GameManager.instance.LoadNextLevel();
+            GameManager.instance.LoadLevel(finishLine.LevelLoading);
         }
 
-        if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Hazard")))
+            if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Hazard")))
         {
-            Debug.Log($"The player is touching");
             TakeDamage();
         }
 
@@ -156,6 +163,6 @@ public class Player : MonoBehaviour
 
     private void TakeDamage()
     {
-        GameManager.instance.ProcessPlayerDeath();
+        GameManager.instance.PlayerDeath();
     }
 }

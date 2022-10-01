@@ -128,6 +128,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4420431058535055944, guid: 645c08edc2d53b941b9a89543fc24eac, type: 3}
   m_PrefabInstance: {fileID: 623472426}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &127416151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 127416152}
+  m_Layer: 0
+  m_Name: End point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &127416152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127416151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.76, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 173997725}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &162039921
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +453,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1524435509}
+  - {fileID: 127416152}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -597,7 +629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.82, y: -0.67, z: -10}
+  m_LocalPosition: {x: -0.32, y: 4.62, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -835,7 +867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657985739}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.82, y: -0.67, z: 0}
+  m_LocalPosition: {x: -0.32, y: 4.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -949,19 +981,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2D: {fileID: 657985742}
+  boxCollider2D: {fileID: 657985743}
   moveInput: 0
   jumpForce: 7
   walkSpeed: 5
+  coyoteTime: 0.2
+  coyoteTimeCounter: 0
   spriteRenderer: {fileID: 2011869889}
   playerColor: 0
-  boxCollider2D: {fileID: 657985743}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   doubleJumpUsed: 0
   powerUp: 0
-  coyoteTime: 0.2
-  coyoteTimeCounter: 0
   animator: {fileID: 657985747}
 --- !u!95 &657985747
 Animator:
@@ -2153,7 +2185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106166166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.82, y: -0.67, z: -10}
+  m_LocalPosition: {x: -0.32, y: 4.62, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2182,6 +2214,7 @@ GameObject:
   - component: {fileID: 1437480503}
   - component: {fileID: 1437480502}
   - component: {fileID: 1437480501}
+  - component: {fileID: 1437480504}
   m_Layer: 0
   m_Name: platformPack_tilesheet@2_65
   m_TagString: Finish
@@ -2282,6 +2315,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1437480504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437480500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d59844d1594e04d911ed79c508a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelLoading: 1
 --- !u!1 &1466920702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2533,6 +2579,7 @@ MonoBehaviour:
   soCollectible: {fileID: 11400000, guid: 6577a0a2d2ca797479a697e2015f9700, type: 2}
   respawning: {fileID: 173997726}
   powerUp: 0
+  endPoint: {fileID: 127416151}
 --- !u!61 &1524435507
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2655,6 +2702,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4694e843503a52041bd1641a6942457d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: 3
+  healthCheck: {fileID: 0}
 --- !u!4 &1859310115
 Transform:
   m_ObjectHideFlags: 0
