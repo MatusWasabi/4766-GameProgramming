@@ -45,7 +45,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c6b0cbc220968934b93ab6808825cf38, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.499
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -144,4 +144,6 @@ MonoBehaviour:
   backgroundSource: {fileID: 5390781973334458591}
   mainMenuMusic: {fileID: 8300000, guid: 26ae7ac46c6f2aa4faab111aca334755, type: 3}
   levelMusic: {fileID: 8300000, guid: c6b0cbc220968934b93ab6808825cf38, type: 3}
+  fadeTime: 5
+  fadeVolume: 0.3
   oldLevel: 0

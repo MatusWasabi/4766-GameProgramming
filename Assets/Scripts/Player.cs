@@ -3,28 +3,33 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("Collision")]
     [SerializeField] public Rigidbody2D rb2D;
     [SerializeField] private BoxCollider2D boxCollider2D;
+    [SerializeField] private LayerMask groundLayer;
 
+    [Header("Movement")]
     [SerializeField] private float moveInput;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float coyoteTimeCounter;
-
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private CollectibleColor playerColor;
-
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool doubleJumpUsed;
     [SerializeField] private PowerUp powerUp;
 
-
+    [Header("Graphic")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private CollectibleColor playerColor;
     [SerializeField] private Animator animator;
     private static readonly int xVelocity = Animator.StringToHash("xVelocity");
     private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
 
+    [Header("Audio")]
     [SerializeField] private PlayerAudioController playerAudioController;
+    [SerializeField] private AudioClip jumpAudioClips;
+    [SerializeField] private AudioClip fallAudioClips;
+    [SerializeField] private AudioClip winAudioClips;
+    [SerializeField] private AudioClip deadAudioClips;
 
 
     private void Awake()
@@ -64,13 +69,13 @@ public class Player : MonoBehaviour
         {
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             coyoteTimeCounter = 0;
-            playerAudioController.PlayJumpSound();
+            playerAudioController.PlaySound(jumpAudioClips);
         }
         else if (value.isPressed && !doubleJumpUsed)
         {
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             doubleJumpUsed = true;
-            playerAudioController.PlayJumpSound();
+            playerAudioController.PlaySound(jumpAudioClips);
         }
     }
 
@@ -80,7 +85,6 @@ public class Player : MonoBehaviour
         {
             GameManager.instance.LoadMainMenu();
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -124,7 +128,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out FinishLine finishLine))
         {
-            playerAudioController.PlayWinSound();
+            playerAudioController.PlaySound(winAudioClips);
             GameManager.instance.LoadLevel(finishLine.LevelLoading);
         }
 
@@ -137,9 +141,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Collsion is called");
         if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
-            playerAudioController.PlayFallSound();
+            playerAudioController.PlaySound(fallAudioClips);
             //Debug.Log("This man touch grass");
         }
     }
@@ -179,7 +184,7 @@ public class Player : MonoBehaviour
 
     private void TakeDamage()
     {
-        playerAudioController.PlayDeadSound();
+        playerAudioController.PlaySound(deadAudioClips);
         GameManager.instance.PlayerDeath();
     }
 }

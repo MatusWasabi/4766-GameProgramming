@@ -227,20 +227,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb2D: {fileID: 5416341445412399838}
   boxCollider2D: {fileID: 5416341445412399839}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   moveInput: 0
   jumpForce: 7
   walkSpeed: 5
   coyoteTime: 0.15
   coyoteTimeCounter: 0
-  spriteRenderer: {fileID: 5416341444084009169}
-  playerColor: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
   doubleJumpUsed: 0
   powerUp: 0
+  spriteRenderer: {fileID: 5416341444084009169}
+  playerColor: 0
   animator: {fileID: 5416341445412399811}
   playerAudioController: {fileID: 5416341445412399812}
+  jumpAudioClips: {fileID: 8300000, guid: 87f434dda92978e47ae41bc956c14d16, type: 3}
+  fallAudioClips: {fileID: 8300000, guid: 8bf10075b0d800c4b8f27522ebae6e10, type: 3}
+  winAudioClips: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+  deadAudioClips: {fileID: 8300000, guid: cf2061e0d778f9f4fb889959e05430d3, type: 3}
 --- !u!95 &5416341445412399811
 Animator:
   serializedVersion: 4
@@ -275,7 +279,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   walkAudioClips: {fileID: 8300000, guid: 8c81c9403452be240a8a8cc8333f629c, type: 3}
-  jumpAudioClips: {fileID: 8300000, guid: 87f434dda92978e47ae41bc956c14d16, type: 3}
-  fallAudioClips: {fileID: 8300000, guid: 8bf10075b0d800c4b8f27522ebae6e10, type: 3}
-  winAudioClips: {fileID: 8300000, guid: c5bb5fbeee0bb144fb8d5d7d986880b2, type: 3}
-  deadAudioClips: {fileID: 8300000, guid: cf2061e0d778f9f4fb889959e05430d3, type: 3}

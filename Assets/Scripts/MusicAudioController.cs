@@ -11,6 +11,8 @@ public class MusicAudioController : MonoBehaviour
     [SerializeField] private AudioSource backgroundSource;
     [SerializeField] private AudioClip mainMenuMusic;
     [SerializeField] private AudioClip levelMusic;
+    [SerializeField] private float fadeTime;
+    [SerializeField] private float fadeVolume;
     [SerializeField] private int oldLevel;
 
     private void Awake()
@@ -31,24 +33,24 @@ public class MusicAudioController : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
 
-        if (backgroundSource != null) { backgroundSource.DOKill(); }
-        
-        if (level == 0 && oldLevel != 0) 
+        if (backgroundSource.isActiveAndEnabled)
         {
-            backgroundSource.volume = 0;
-            backgroundSource.DOFade(0.5f, 10).SetEase(Ease.InSine);
-            backgroundSource.clip = mainMenuMusic;
-            oldLevel = level;
+            if (level == 0 && oldLevel != 0)
+            {
+                backgroundSource.volume = 0;
+                backgroundSource.DOFade(fadeVolume, fadeTime).SetEase(Ease.InSine);
+                backgroundSource.clip = mainMenuMusic;
+                oldLevel = level;
+            }
+            else if (level == 1 && oldLevel == 0)
+            {
+                backgroundSource.volume = 0;
+                backgroundSource.DOFade(fadeVolume, fadeTime).SetEase(Ease.InSine);
+                backgroundSource.clip = levelMusic;
+                oldLevel = level;
+            }
+            backgroundSource.Play(); 
         }
-        else if (level == 1 && oldLevel == 0)
-        {
-            backgroundSource.volume = 0;
-            backgroundSource.DOFade(0.5f, 10).SetEase(Ease.InSine);
-            backgroundSource.clip = levelMusic;
-            oldLevel = level;
-        }
-        if (backgroundSource.isActiveAndEnabled) { backgroundSource.Play(); }
-
 
     }
 }

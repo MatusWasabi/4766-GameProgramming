@@ -6,16 +6,18 @@ public class PlayerAudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip walkAudioClips;
-    [SerializeField] private AudioClip jumpAudioClips;
-    [SerializeField] private AudioClip fallAudioClips;
-    [SerializeField] private AudioClip winAudioClips;
-    [SerializeField] private AudioClip deadAudioClips;
+    
 
     private void Awake()
     {
         audioSource = FindObjectOfType<AudioSource>();
     }
 
+    public void PlayWalkSound()
+    {
+        audioSource.PlayOneShot(walkAudioClips);
+    }
+    /*
     public void PlayJumpSound()
     {
         audioSource.PlayOneShot(jumpAudioClips);
@@ -26,10 +28,6 @@ public class PlayerAudioController : MonoBehaviour
         audioSource.PlayOneShot(fallAudioClips);
     }
 
-    public void PlayWalkSound()
-    {
-        audioSource.PlayOneShot(walkAudioClips);
-    }
 
     public void PlayWinSound()
     {
@@ -40,6 +38,7 @@ public class PlayerAudioController : MonoBehaviour
     {
         audioSource.PlayOneShot(deadAudioClips);
     }
+    */
 
     public void PlaySound(AudioClip soundPlayed)
     {
