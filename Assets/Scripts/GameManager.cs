@@ -28,8 +28,6 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
-        
     }
 
     public void LoadLevel(int levelIndex)
@@ -64,10 +62,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    public int GetIndexLevel()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
+    }
     private void OnDestroy()
     {
-        Debug.Log("This has been destoryed");
+        //Debug.Log("This has been destoryed");
     }
 
     public void LoadMainMenu()

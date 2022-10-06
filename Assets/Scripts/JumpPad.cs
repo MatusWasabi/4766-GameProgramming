@@ -7,25 +7,22 @@ public class JumpPad : MonoBehaviour
     [SerializeField] private BoxCollider2D jumpPadColldier;
     [SerializeField] private float pushForce = 5f;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip springAudioClip;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = FindObjectOfType<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             animator.SetTrigger("IsUsed");
+            audioSource.PlayOneShot(springAudioClip);
             player.rb2D.AddForce(Vector2.up * pushForce, ForceMode2D.Impulse);     
         }
-
     }
 }

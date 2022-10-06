@@ -6,7 +6,8 @@ public class Respawning : MonoBehaviour
 {
     [SerializeField] private float waitingSeconds;
     [SerializeField] private GameObject respawningItem;
-
+    [SerializeField] private AudioClip respawnSound;
+    [SerializeField] private AudioSource audioSource;
 
     public void RespawnItem ()
     {
@@ -15,7 +16,9 @@ public class Respawning : MonoBehaviour
 
     private IEnumerator Respawn()
     {
-            yield return new WaitForSeconds(waitingSeconds);
-            respawningItem.SetActive(true);
+        yield return new WaitForSeconds(waitingSeconds);
+        audioSource = FindObjectOfType<AudioSource>();
+        respawningItem.SetActive(true);
+        audioSource.PlayOneShot(respawnSound);
     }
 }

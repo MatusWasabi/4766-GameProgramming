@@ -11,12 +11,19 @@ public class Collectible : MonoBehaviour
     public PowerUp powerUp;
     private SpriteRenderer collectibleSprite;
     [SerializeField] private GameObject endPoint;
+    [SerializeField] private AudioClip collectibleSound;
+    public AudioClip collectedSound
+    {
+        get => collectibleSound;
+        private set { collectibleSound = value; }
+    }
 
 
 
     private void Start()
     {
         powerUp = soCollectible.GetPowerUp();
+       
 
         collectibleSprite = GetComponent<SpriteRenderer>();
         collectibleSprite.sprite = soCollectible.GetSprite();
@@ -28,8 +35,7 @@ public class Collectible : MonoBehaviour
 
         if (soCollectible != null)
         {
-            Debug.Log($"SoCollectible name is {soCollectible.GetName()}");
-
+            //Debug.Log($"SoCollectible name is {soCollectible.GetName()}");
         }
 
         if (endPoint != null)
@@ -55,9 +61,10 @@ public class Collectible : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
         //(Ease.InOutBack).SetLoops(-1, LoopType.Yoyo);
     }
+
+    
 
 
 

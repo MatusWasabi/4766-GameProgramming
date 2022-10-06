@@ -19,24 +19,28 @@ public class Player : MonoBehaviour
     [SerializeField] private bool doubleJumpUsed;
     [SerializeField] private PowerUp powerUp;
 
+
     [SerializeField] private Animator animator;
     private static readonly int xVelocity = Animator.StringToHash("xVelocity");
     private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
 
+    [SerializeField] private PlayerAudioController playerAudioController;
+
 
     private void Awake()
     {
-          doubleJumpUsed = true;
+        doubleJumpUsed = true;
+        //playerAudioController = FindObjectOfType<PlayerAudioController>();
     }
 
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         rb2D.velocity = new Vector2(moveInput * walkSpeed, rb2D.velocity.y);
 
         if (Grounded()) 
         {
             coyoteTimeCounter = coyoteTime;
+            
         }
         else
         {
@@ -45,16 +49,12 @@ public class Player : MonoBehaviour
 
         animator.SetBool(IsGrounded, Grounded());
         animator.SetFloat(xVelocity, Mathf.Abs(moveInput));
-
-
-
     }
 
     private void OnMove(InputValue value) 
     {
         moveInput = value.Get<float>();
         FlipPlayerSpirte();
-        Debug.Log($"{value} is pressed");
 
     }
 
@@ -64,15 +64,14 @@ public class Player : MonoBehaviour
         {
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             coyoteTimeCounter = 0;
+            playerAudioController.PlayJumpSound();
         }
         else if (value.isPressed && !doubleJumpUsed)
         {
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             doubleJumpUsed = true;
+            playerAudioController.PlayJumpSound();
         }
-
-        Debug.Log($"{value} is pressed");
-
     }
 
     private void OnQuit(InputValue value)
@@ -90,6 +89,11 @@ public class Player : MonoBehaviour
         {
             CollectibleColor playerColor = collectible.color;
             powerUp = collectible.powerUp;
+
+            if (collectible.collectedSound != null) 
+            { 
+                playerAudioController.PlaySound(collectible.collectedSound); 
+            }
 
             switch (playerColor)
             {
@@ -120,15 +124,24 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out FinishLine finishLine))
         {
+            playerAudioController.PlayWinSound();
             GameManager.instance.LoadLevel(finishLine.LevelLoading);
         }
 
-            if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Hazard")))
+        if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Hazard")))
         {
             TakeDamage();
         }
 
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            playerAudioController.PlayFallSound();
+            //Debug.Log("This man touch grass");
+        }
     }
 
     private void FlipPlayerSpirte()
@@ -166,6 +179,7 @@ public class Player : MonoBehaviour
 
     private void TakeDamage()
     {
+        playerAudioController.PlayDeadSound();
         GameManager.instance.PlayerDeath();
     }
 }
