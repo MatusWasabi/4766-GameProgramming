@@ -3,7 +3,19 @@ guid: 6260144c4ee775a42a1abb83034ff3b9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rb2D: {instanceID: 0}
+  - boxCollider2D: {instanceID: 0}
+  - spriteRenderer: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - playerAudioController: {instanceID: 0}
+  - jumpAudioClips: {instanceID: 0}
+  - fallAudioClips: {instanceID: 0}
+  - winAudioClips: {instanceID: 0}
+  - deadAudioClips: {instanceID: 0}
+  - deadParticle: {instanceID: 0}
+  - footStepParticle: {instanceID: 0}
+  - groundDustParticle: {instanceID: 0}
   executionOrder: 300
   icon: {instanceID: 0}
   userData: 

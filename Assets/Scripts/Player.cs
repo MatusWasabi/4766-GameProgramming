@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using System.Collections;
 public class Player : MonoBehaviour
 {
     [Header("Collision")]
@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float coyoteTimeCounter;
     [SerializeField] private bool doubleJumpUsed;
     [SerializeField] private PowerUp powerUp;
+    [SerializeField] private Vector2 velocity;
 
     [Header("Graphic")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -31,41 +32,45 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip winAudioClips;
     [SerializeField] private AudioClip deadAudioClips;
 
+    [Header("Particles")]
+    [SerializeField] private GameObject footStepParticle;
+    [SerializeField] private ParticleSystem groundDustParticle;
+    [SerializeField] private ParticleSystem deadParticle;
+    [SerializeField] private ParticleSystem winParticle;
 
     private void Awake()
     {
         doubleJumpUsed = true;
-        //playerAudioController = FindObjectOfType<PlayerAudioController>();
     }
 
     private void FixedUpdate()
     {
         rb2D.velocity = new Vector2(moveInput * walkSpeed, rb2D.velocity.y);
+        velocity = rb2D.velocity;
 
-        if (Grounded()) 
+        if (Grounded())
         {
             coyoteTimeCounter = coyoteTime;
-            
         }
         else
         {
-            coyoteTimeCounter -= Time.deltaTime; 
+            coyoteTimeCounter -= Time.deltaTime;
         }
-
         animator.SetBool(IsGrounded, Grounded());
         animator.SetFloat(xVelocity, Mathf.Abs(moveInput));
     }
 
-    private void OnMove(InputValue value) 
+    private void OnMove(InputValue value)
     {
         moveInput = value.Get<float>();
         FlipPlayerSpirte();
-
+        if (moveInput != 0) { footStepParticle.SetActive(true); }
+        else { footStepParticle.SetActive(false); }
     }
 
     private void OnJump(InputValue value)
     {
-        if (value.isPressed && coyoteTimeCounter > 0 )
+        if (value.isPressed && coyoteTimeCounter > 0)
         {
             rb2D.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             coyoteTimeCounter = 0;
@@ -94,9 +99,9 @@ public class Player : MonoBehaviour
             CollectibleColor playerColor = collectible.color;
             powerUp = collectible.powerUp;
 
-            if (collectible.collectedSound != null) 
-            { 
-                playerAudioController.PlaySound(collectible.collectedSound); 
+            if (collectible.collectedSound != null)
+            {
+                playerAudioController.PlaySound(collectible.collectedSound);
             }
 
             switch (playerColor)
@@ -123,29 +128,30 @@ public class Player : MonoBehaviour
                     break;
 
             }
-             //collectible.gameObject.SetActive(false);
+            //collectible.gameObject.SetActive(false);
         }
 
         if (collision.gameObject.TryGetComponent(out FinishLine finishLine))
         {
             playerAudioController.PlaySound(winAudioClips);
-            GameManager.instance.LoadLevel(finishLine.LevelLoading);
+            StartCoroutine(LoadPlayerWin(finishLine.LevelLoading));
+            
         }
 
         if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Hazard")))
         {
-            TakeDamage();
+            deadParticle.Play();
+            StartCoroutine(LoadPlayerDead());
         }
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collsion is called");
         if (boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             playerAudioController.PlaySound(fallAudioClips);
-            //Debug.Log("This man touch grass");
+            groundDustParticle.Play();
         }
     }
 
@@ -165,26 +171,44 @@ public class Player : MonoBehaviour
     {
         float extendedHeight = 0.1f;
         Bounds boxColliderBound = boxCollider2D.bounds;
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxColliderBound.center, 
-            boxColliderBound.size, 0f,Vector2.down ,extendedHeight, groundLayer);
-        
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxColliderBound.center,
+            boxColliderBound.size, 0f, Vector2.down, extendedHeight, groundLayer);
+
         Color rayColor;
         if (raycastHit2D.collider != null)
         {
             rayColor = Color.green;
+            
         }
         else
         {
             rayColor = Color.red;
+            footStepParticle.SetActive(false);
         }
-
-        
         return raycastHit2D.collider != null;
     }
 
     private void TakeDamage()
     {
-        playerAudioController.PlaySound(deadAudioClips);
         GameManager.instance.PlayerDeath();
     }
+
+
+    private IEnumerator LoadPlayerDead()
+    {
+        playerAudioController.PlaySound(deadAudioClips);
+        yield return new WaitForSeconds(1);
+        TakeDamage();
+    }
+
+    private IEnumerator LoadPlayerWin(int level)
+    {
+        winParticle.Play();
+        yield return new WaitForSeconds(1);
+        GameManager.instance.LoadLevel(level);
+    }
+
+
+
+
 }

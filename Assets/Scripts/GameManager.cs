@@ -31,10 +31,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadLevel(int levelIndex)
-    {
+    { 
         SceneManager.LoadScene(levelIndex);
         DOTween.KillAll();
     }
+
+
 
     public void LoadNextLevel()
     {

@@ -12,18 +12,18 @@ public class Collectible : MonoBehaviour
     private SpriteRenderer collectibleSprite;
     [SerializeField] private GameObject endPoint;
     [SerializeField] private AudioClip collectibleSound;
+    [SerializeField] private ParticleSystem collectedParticle;
+    [SerializeField] private ParticleSystem respawnParticle;
+
     public AudioClip collectedSound
     {
         get => collectibleSound;
         private set { collectibleSound = value; }
     }
 
-
-
     private void Start()
     {
         powerUp = soCollectible.GetPowerUp();
-       
 
         collectibleSprite = GetComponent<SpriteRenderer>();
         collectibleSprite.sprite = soCollectible.GetSprite();
@@ -33,38 +33,34 @@ public class Collectible : MonoBehaviour
             color = randomCollectible.color;
         }
 
-        if (soCollectible != null)
-        {
-            //Debug.Log($"SoCollectible name is {soCollectible.GetName()}");
-        }
-
         if (endPoint != null)
         {
             transform.DOMove(endPoint.transform.position, 1f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
         }
-            
-        
-        
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log($"This Collectible is {soCollectible}");
             gameObject.SetActive(false);
             respawning.RespawnItem();
         }
     }
 
-    private void FixedUpdate()
+    private void OnDisable()
     {
-        //(Ease.InOutBack).SetLoops(-1, LoopType.Yoyo);
+        collectedParticle.gameObject.transform.position = gameObject.transform.position;
+        collectedParticle.Play();
     }
 
-    
+    private void OnEnable()
+    {
+        respawnParticle.gameObject.transform.position = gameObject.transform.position;
+        respawnParticle.Play();
+    }
+
+
 
 
 
